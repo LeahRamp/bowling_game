@@ -11,7 +11,9 @@ class BowlingGame:
         self.rolls = []
         
 
-    def roll(self, pins):
+    def roll(self, pins: int):
+        if not isinstance(pins, int) or pins < 0 or pins > 10:
+            raise ValueError(f"Invalid roll value: {pins}")
         """
         Records a roll in the game.
 
