@@ -31,9 +31,17 @@ class TestBowlingGame(unittest.TestCase):
         self.assertEqual(20, self.game.score())
 
     def test_perfect_game(self):
+        """Test a perfect game (12 strikes)"""
         self.roll_many(12, 10)
         self.assertEqual(300, self.game.score())
 
+    def test_10th_frame_strike(self):
+        """Test strike in the 10th frame with 2 bonus strikes"""
+        self.roll_many(18, 0) # 9 frames of gutter balls
+        self.game.roll(10) # 10th frame strike
+        self.game.roll(10) # bonus 1
+        self.game.roll(10) # bonus 2
+        self.assertEqual(30, self.game.score())
 
 if __name__ == "__main__":
     unittest.main()
