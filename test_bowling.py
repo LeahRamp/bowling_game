@@ -43,5 +43,6 @@ class TestBowlingGame(unittest.TestCase):
         self.game.roll(10) # bonus 2
         self.assertEqual(30, self.game.score())
 
+
 if __name__ == "__main__":
     unittest.main()
