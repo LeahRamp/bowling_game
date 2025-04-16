@@ -30,6 +30,10 @@ class TestBowlingGame(unittest.TestCase):
         # Expected score: 20 (1 pin × 20 rolls)
         self.assertEqual(20, self.game.score())
 
+    def test_perfect_game(self):
+        self.roll_many(12, 10)
+        self.assertEqual(300, self.game.score())
+
 
 if __name__ == "__main__":
     unittest.main()
