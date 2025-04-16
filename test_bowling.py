@@ -43,6 +43,10 @@ class TestBowlingGame(unittest.TestCase):
         self.game.roll(10) # bonus 2
         self.assertEqual(30, self.game.score())
 
+    def test_invalid_negative(self):
+        """Test if rolling a negative number raises an error."""
+        with self.assertRaises(ValueError):
+            self.game.roll(-1)
 
 if __name__ == "__main__":
     unittest.main()
