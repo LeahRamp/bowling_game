@@ -48,5 +48,10 @@ class TestBowlingGame(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.game.roll(-1)
 
+    def test_invalid_positive(self):
+        """Test if rolling a number higher than 10 raises an error."""
+        with self.assertRaises(ValueError):
+            self.game.roll(11)
+
 if __name__ == "__main__":
     unittest.main()
