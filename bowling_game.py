@@ -25,69 +25,75 @@ class BowlingGame:
 
     def score(self):
         """Calculate the score for the current game."""
-        score = 0
-        frame_index = 0
+        total_score = 0
+        index = 0
 
-        for frame in range(10):
-            if self._is_strike(frame_index):
+        for _ in range(10):
+            if self._is_strike(index):
                 # Strike
-                score += 10 + self._strike_bonus(frame_index)
-                frame_index += 1
-            elif self._is_spare(frame_index):
+                total_score += 10 + self._strike_bonus(index)
+                index += 1
+            elif self._is_spare(index):
                 # Spare
-                score += 10 + self._spare_bonus(frame_index)
-                frame_index += 2
+                total_score += 10 + self._spare_bonus(index)
+                index += 2
             else:
                 # Open frame
-                score += self.rolls[frame_index] + self.rolls[frame_index + 1]
-                frame_index += 2
+                total_score += self._sum_of_balls_in_frame(index)
+                index += 2
 
-        return score
+        return total_score
 
-    def _is_strike(self, frame_index):
+    def _is_strike(self, index):
         """
-        Check if the roll at frame_index is a strike.
+        Check if the roll at index is a strike.
 
         Args:
-            frame_index: Index of the roll to check
+            index: Index of the roll to check
 
         Returns:
             True if the roll is a strike, False otherwise
         """
-        return frame_index < len(self.rolls) and self.rolls[frame_index] == 10
+        return index < len(self.rolls) and self.rolls[index] == 10
 
-    def _is_spare(self, frame_index):
+    def _is_spare(self, index):
         """
-        Check if the rolls at frame_index and frame_index + 1 form a spare.
+        Check if the rolls at index and index + 1 form a spare.
 
         Args:
-            frame_index: Index of the first roll in a frame
+            index: Index of the first roll in a frame
 
         Returns:
             True if the rolls form a spare, False otherwise
         """
-        return frame_index + 1 < len(self.rolls) and self.rolls[frame_index] + self.rolls[frame_index + 1] == 10
+        return index + 1 < len(self.rolls) and self.rolls[index] + self.rolls[index + 1] == 10
 
-    def _strike_bonus(self, frame_index):
+    def _strike_bonus(self, index):
         """
         Calculate the bonus for a strike.
 
         Args:
-            frame_index: Index of the strike roll
+            index: Index of the strike roll
 
         Returns:
             The value of the next two rolls after the strike
         """
-        return self.rolls[frame_index + 1] + self.rolls[frame_index + 2]
+        return self.rolls[index + 1] + self.rolls[index + 2]
 
-    def _spare_bonus(self, frame_index):
+    def _spare_bonus(self, index):
         """
         Calculate the bonus for a spare.
 
         Args:
-            frame_index: Index of the first roll in a spare
+            index: Index of the first roll in a spare
 
         Returns:
             The value of the roll after the spare
         """
-        return self.rolls[frame_index + 2]
+        return self.rolls[index + 2]
+    
+    def _sum_of_balls_in_frame(self, index):
+        return self._get_roll(index) + self._get_roll(index + 1)
+    
+    def _get_roll(self, index):
+        return self.rolls[index] if index < len(self.rolls) else 0
