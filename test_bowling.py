@@ -19,6 +19,10 @@ class TestBowlingGame(unittest.TestCase):
         for _ in range(n):
             self.game.roll(pins)
 
+    def roll_sequence(self, pins_list):
+        for pins in pins_list:
+            self.game.roll(pins)
+
     def test_gutter_game(self):
         """Test a game where no pins are knocked down."""
         self.roll_many(20, 0)
@@ -52,6 +56,12 @@ class TestBowlingGame(unittest.TestCase):
         """Test if rolling a number higher than 10 raises an error."""
         with self.assertRaises(ValueError):
             self.game.roll(11)
+
+    def test_invalid_frame(self):
+        """Testing that a frame cant exceed 10 pins unless it is a strike"""
+        self.roll_sequence([5, 6] + [0]*18)
+        with self.assertRaises(ValueError):
+            self.game.score()
 
 if __name__ == "__main__":
     unittest.main()

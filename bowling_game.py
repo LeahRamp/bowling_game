@@ -39,7 +39,10 @@ class BowlingGame:
                 frame_index += 2
             else:
                 # Open frame
-                score += self.rolls[frame_index] + self.rolls[frame_index + 1]
+                frame_score += self.rolls[frame_index] + self.rolls[frame_index + 1]
+                if score > 10:
+                    raise ValueError(f"Invalid frame at index {frame_index}: more than 10 pins")
+                score += frame_score
                 frame_index += 2
 
         return score
