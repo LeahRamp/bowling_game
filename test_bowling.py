@@ -19,6 +19,10 @@ class TestBowlingGame(unittest.TestCase):
         for _ in range(n):
             self.game.roll(pins)
 
+    def roll_sequence(self, pins_list):
+        for pins in pins_list:
+            self.game.roll(pins)
+
     def test_gutter_game(self):
         """Test a game where no pins are knocked down."""
         self.roll_many(20, 0)
@@ -42,6 +46,11 @@ class TestBowlingGame(unittest.TestCase):
         self.game.roll(10) # bonus 1
         self.game.roll(10) # bonus 2
         self.assertEqual(30, self.game.score())
+
+    def test_mixed_game(self):
+        """Test a realistic mixed game"""
+        self.roll_sequence([10, 7, 3, 9, 0, 10, 0, 8, 8, 2, 0, 6, 10, 10, 10, 8, 1])
+        self.assertEqual(167, self.game.score())
 
     def test_invalid_negative(self):
         """Test if rolling a negative number raises an error."""
